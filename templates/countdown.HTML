@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body id="countdown-page">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="{{ url_for('index') }}">🕒 CLOCK</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="{{ url_for('index') }}">HOME</a>
+        <a href="{{ url_for('countdown') }}">COUNTDOWN</a>
+         <a href="{{ url_for('timer') }}">TIMER TAB</a>
+       
+      </div>
+      <!-- <a href="{{ url_for('setting') }}" class="settings-btn" title="Settings">⚙️</a> -->
+      <!-- <button class="settings-btn" title="Settings">⚙️</button> -->
+    </div>
+  </nav>
+
+  <!-- Countdown Container -->
+  <div class="countdown-container">
+    <h2>Christmas</h2>
+    <div id="countdown">
+      <!-- Time will be inserted here by JS -->
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const countdown = document.getElementById('countdown');
+
+// Target: Christmas this year
+const targetDate = new Date(new Date().getFullYear(), 11, 25); // December 25
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = targetDate - now;
+
+  if (diff <= 0) {
+    countdown.innerHTML = "It's Christmas!";
+    return;
+  }
+
+  const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+  const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  countdown.innerHTML = `${months} months ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+  </script>
+</body>
+</html>
